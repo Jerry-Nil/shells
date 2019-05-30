@@ -1,42 +1,66 @@
 #!/bin/zsh
+# @author  Jerry <superzcj_001@163.com>
+# @version 0.1.1
+
+echo -e ' \033[36m@ \033[34m欢迎使用智能推代码脚本\033[0m'
+echo -e ' \033[36m@ \033[32m作者 \033[35mJerry\033[0m'
+echo -e ' \033[36m@ \033[32m版本 \033[35m0.1.1\033[0m'
 
 REMOTE=$(git remote)
 BRANCH=$(git symbolic-ref --short -q HEAD)
 STATUS=$(git status --porcelain 2> /dev/null | tail -n1)
 
-echo -e "\033[36m本地分支\033[0m  \033[32m"$BRANCH"\033[0m"
-echo -e "\033[36m远程仓库\033[0m  \033[31m"$REMOTE"\033[0m"
+echo
+echo -e " \033[36m@ 本地: \033[32m"$BRANCH"\033[0m"
+echo -e " \033[36m@ 远程: \033[31m"$REMOTE/$BRANCH"\033[0m"
 
 if [[ -n $STATUS ]]; then
 	echo
-	echo '当前有未提交内容，准备贮藏...'
+	echo -e ' \033[36m@ 存在未提交改动，准备贮藏...\033[0m'
+	echo
 	git stash
-	echo '未提交内容已贮藏'
+	echo
+	echo -e ' \033[36m@ 已贮藏\033[0m'
 fi
 
 echo
-echo '准备拉取更新'
+echo -e ' \033[36m@ 准备获取远程仓库最新改动\033[0m'
+echo
 
 git fetch $REMOTE $BRANCH --prune
 
 echo
-echo '与远程分支比较...'
+echo -e ' \033[36m@ 获取完毕\033[0m'
+echo
+echo -e ' \033[36m@ 与远程分支比较差异...\033[0m'
 DIFF=$(git log $BRANCH..$REMOTE/$BRANCH --oneline 2> /dev/null | tail -n1)
 
 if [[ -n $DIFF ]]; then
-	echo -e ' \033[36m@ 存在差异, 准备变基式拉取...'
+	echo -e ' \033[36m@ 存在差异, 准备变基式拉取...\033[0m'
+	echo
 	git pull $REMOTE $BRANCH --rebase
+	echo
+	echo -e ' \033[36m@ 拉取完毕\033[0m'
 else
+	echo
+	echo -e ' \033[36m@ 无差异，跳过拉取代码\033[0m'
 fi
 
 echo
-echo '准备推送'
+echo -e ' \033[36m@ 准备推送'
+echo
 git push
-echo '推送完成'
+echo
+echo -e ' \033[36m@ 推送完成'
 
 if [[ -n $STATUS ]]; then
 	echo
-	echo '准备弹出已贮藏的未提交内容'
+	echo -e ' \033[36m@ 准备恢复已贮藏改动\033[0m'
+	echo
 	git stash pop
-	echo '贮藏内容已经恢复到工作区'
+	echo
+	echo -e ' \033[36m@ 改动已经恢复到工作区\033[0m'
 fi
+
+echo
+echo -e ' \033[36m@ 结束\033[0m'
