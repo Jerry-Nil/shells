@@ -17,7 +17,9 @@ echo -e " \033[36m@ 远程: \033[31m"$REMOTE/$BRANCH"\033[0m"
 if [[ -n $STATUS ]]; then
 	echo
 	echo -e ' \033[36m@ 存在未提交改动，准备贮藏...\033[0m'
+	echo
 	git stash
+	echo
 	echo -e ' \033[36m@ 已贮藏\033[0m'
 fi
 
@@ -40,6 +42,7 @@ if [[ -n $DIFF ]]; then
 	echo
 	echo -e ' \033[36m@ 拉取完毕\033[0m'
 else
+	echo
 	echo -e ' \033[36m@ 无差异，跳过拉取代码\033[0m'
 fi
 
