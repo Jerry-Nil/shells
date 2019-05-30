@@ -1,10 +1,10 @@
 #!/bin/zsh
 # @author  Jerry <superzcj_001@163.com>
-# @version 0.1.2
+# @version 0.1.3
 
 echo -e ' \033[36m@ \033[34m欢迎使用智能推代码脚本\033[0m'
 echo -e ' \033[36m@ \033[32m作者 \033[35mJerry\033[0m'
-echo -e ' \033[36m@ \033[32m版本 \033[35m0.1.2\033[0m'
+echo -e ' \033[36m@ \033[32m版本 \033[35m0.1.3\033[0m'
 
 REMOTE=$(git remote)
 BRANCH=$(git symbolic-ref --short -q HEAD)
@@ -49,7 +49,7 @@ fi
 echo
 echo -e ' \033[36m@ 准备推送\033[0m'
 echo
-git push
+git push $REMOTE $BRANCH
 echo
 echo -e ' \033[36m@ 推送完成\033[0m'
 
